@@ -29,7 +29,7 @@ public class Jugador {
 	private boolean abajo; // Variable para determinar si esta caminando hacia abajo
 	private boolean izq; // Variable para determinar si esta caminando hacia la izquierda
 	private boolean der; // Variable para determinar si esta caminando hacia la derecha
-	private boolean inv;
+	private boolean inv; // Variable de vulnerabilidad contra un enemigo
 
 	private ArrayList<Bala> balas; // Variable para cargar balas en el jugador
 	
@@ -153,13 +153,13 @@ public class Jugador {
 			}
 		}
 
-//		if (inv == true) {
-//			tinv++;
-//			if (tinv == 120) {
-//				inv = false;
-//				tinv = 0;
-//			}
-//		}
+		if (inv == true) {
+			tinv++;
+			if (tinv == 120) {
+				inv = false;
+				tinv = 0;
+			}
+		}
 	}
 
 	/**
