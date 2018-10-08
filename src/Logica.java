@@ -4,34 +4,37 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-
 import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Text;
-
 import processing.core.PApplet;
 import processing.core.PImage;
 
 public class Logica extends Thread {
 
-	private PApplet app;
-	private Time tiempo;
+	private PApplet app; // Variable para cargar la clase PApplet
+	private Time tiempo; // Variable para cargar la clase Tiempo
 
-	private Jugador jugador1;
-	private Jugador jugador2;
+	private Jugador jugador1; // Variable para crear el jugador 1
+	private Jugador jugador2; // Variable para crear el jugador 2
 
-	private ArrayList<Enemigo> enemigos;
-	private ArrayList<Recuerdo> recuerdos;
+	private ArrayList<Enemigo> enemigos; // Variable crear varios enemigos
+	private ArrayList<Recuerdo> recuerdos; // Variable crear varios recuerdos
 
+	// Variables para cargar las imagenes de pantallas
 	private PImage p1;
 	private PImage p2;
 	private PImage p3;
 	private PImage p5;
 	private PImage p6;
 	private PImage p7;
-	private PImage escenario;
+	private PImage escenario; // Variable para cargar el escenario
 
-	private int usuariosConectados;
-	private int pantallas = 1;
+	private int usuariosConectados; // Variable para saber cuantos usuarios hay conectados
+	private int pantallas = 1; // Variable para cambiar de pantalla
 
+	/**
+	 * Constructor de la clase Logica
+	 * @param app
+	 */
 	public Logica(PApplet app) {
 		this.app = app;
 		tiempo = new Time(app);
@@ -62,6 +65,9 @@ public class Logica extends Thread {
 		escenario = app.loadImage("escenario.png");
 	}
 
+	/**
+	 * Metodo para pintar cada pantalla
+	 */
 	public void pintar() {
 		app.background(0);
 		switch (pantallas) {
@@ -102,6 +108,9 @@ public class Logica extends Thread {
 		}
 	}
 
+	/**
+	 * Metodo para jugar con los personajes en el teclado
+	 */
 	public void teclado() {
 		if (app.key == ' ') {
 			jugador1.disparar();
@@ -115,11 +124,17 @@ public class Logica extends Thread {
 		jugador2.mover();
 	}
 
+	/**
+	 * Metodo para dejar de jugar con los personajes con el teclado
+	 */
 	public void tecladoSoltado() {
 		jugador1.soltar();
 		jugador2.soltar();
 	}
 
+	/**
+	 * Metodo para pintar la pantalla1 y pasar a la siguiente
+	 */
 	public void pintarPantalla1() {
 		// Inicio
 		app.image(p2, app.width / 2, app.height / 2);
@@ -128,6 +143,9 @@ public class Logica extends Thread {
 		}
 	}
 
+	/**
+	 * Metodo para pintar la pantalla2, mostrar la IP, cuantos usuarios hay y pasar a la siguiente
+	 */
 	public void pintarPantalla2() {
 		// IP
 		app.image(p1, app.width / 2, app.height / 2);
@@ -148,21 +166,27 @@ public class Logica extends Thread {
 		}
 	}
 
+	/**
+	 * Metodo para pintar la pantalla3 las intrucciones
+	 */
 	public void pintarPantalla3() {
 		// Instrucciones
 		app.image(p3, app.width / 2, app.height / 2);
 	}
 
+	/**
+	 * Metodo para pintar la pantalla4 y desarrollar todo el juego
+	 */
 	public void pintarPantalla4() {
-		// if (pantallas == 4) {
+		if (pantallas == 4) {
 		// Juego
 		app.image(escenario, jugador1.getCamx(), jugador1.getCamy());
 		tiempo.draw();
 
+		//Jugador 1
 		if (jugador1.getVida() > 0) {
 			jugador1.pintar();
 			jugador1.caminando();
-
 			jugador1.validarDistanciaObjeto(recuerdos);
 			jugador1.matarEnemigos(enemigos);
 			for (int i = 0; i < enemigos.size(); i++) {
@@ -170,6 +194,7 @@ public class Logica extends Thread {
 			}
 		}
 
+		//Jugador 2
 		if (jugador2.getVida() > 0) {
 			jugador2.setCamx(jugador1.getCamx());
 			jugador2.setCamy(jugador1.getCamy());
@@ -200,10 +225,13 @@ public class Logica extends Thread {
 
 		if (jugador1.getPuntaje() + jugador2.getPuntaje() == 250) {
 			pantallas = 5;
+			}
 		}
 	}
-	// }
 
+	/**
+	 * Metodo para pintar la pantalla5 y mostrar puntajes
+	 */
 	public void pintarPantalla5() {
 		// Final
 		app.image(p5, app.width / 2, app.height / 2);
@@ -214,12 +242,18 @@ public class Logica extends Thread {
 		app.text("Puntaje P2: " + jugador2.getPuntaje(), 600, app.height / 2 + 100);
 	}
 
+	/**
+	 * Metodo para pintar la pantalla6 y decir que perdió
+	 */
 	public void pintarPantalla6() {
 		// GameOver
 		app.image(p6, app.width / 2, app.height / 2);
 		// System.out.println("GAME OVER GATITOS");
 	}
 
+	/**
+	 * Metodo para pintar la pantalla7 y decir que se acabo el tiempo
+	 */
 	public void pintarPantalla7() {
 		// Time
 		app.image(p7, app.width / 2, app.height / 2);

@@ -13,25 +13,35 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 
 public class TCPConection {
-	private Socket socket;
 
-	private Receptor receptor;
+	private Socket socket; // Variable para crear un socket
+	private Receptor receptor; // Variable para crear un receptor
+	private MessageObserver observer; // Variable para llamar la interfaz
+	private Jugador jugador; // Variable para cargar atributos del jugador
+	private Logica logica; // Variable para cargar atributos de logica
+	private Paso hilo; // Variable para nombrar la clase hilo
 
-	private MessageObserver observer;
-
-	private Jugador jugador;
-	private Logica logica;
-	private Muerte hilo;
-
+	/**
+	 * Constructor de la clase TCPConection
+	 * 
+	 * @param socket
+	 * @param jugador
+	 * @param logica
+	 */
 	public TCPConection(Socket socket, Jugador jugador, Logica logica) {
 		this.socket = socket;
 		this.receptor = new Receptor(socket);
-		this.hilo = new Muerte(socket, logica);
+		this.hilo = new Paso(socket, logica);
 		hilo.start();
 		this.jugador = jugador;
 		this.logica = logica;
 	}
 
+	/**
+	 * Metodo para enviar mensajes
+	 * 
+	 * @param mensaje
+	 */
 	public void send(String mensaje) {
 		try {
 			DataOutputStream os = new DataOutputStream(socket.getOutputStream());
@@ -41,6 +51,12 @@ public class TCPConection {
 		}
 	}
 
+	/**
+	 * Interfaz observer
+	 * 
+	 * @author Happy
+	 *
+	 */
 	public interface MessageObserver {
 		void onDataReceiver(String mensaje);
 	}
@@ -49,17 +65,29 @@ public class TCPConection {
 		this.observer = observer;
 	}
 
+	/**
+	 * Metodo para activar el hilo del receptor ._."
+	 */
 	public void activarRecepcion() {
 		receptor.start();
 	}
 
 	private class Receptor extends Thread {
-		Socket socket;
+		Socket socket; // Variable para crear un socket
 
+		/**
+		 * Constructor de la clase Receptor
+		 * 
+		 * @param socket
+		 */
 		public Receptor(Socket socket) {
 			this.socket = socket;
 		}
 
+		/**
+		 * Metodo para correr el hilo de receptor
+		 * 
+		 */
 		@Override
 		public void run() {
 			try {
@@ -76,48 +104,26 @@ public class TCPConection {
 		}
 	}
 
-	// private class Muerte extends Thread {
-	// Socket socket;
-	// Boolean parar;
-	// Jugador jugador;
-	//
-	// public Muerte(Socket socket, Jugador jugador) {
-	// this.socket = socket;
-	// parar = false;
-	// this.jugador = jugador;
-	// }
-	//
-	// @Override
-	// public void run() {
-	// while (!parar) {
-	// System.out.println("--------------------------");
-	// System.out.println(jugador.getVida());
-	// if (jugador.getVida() == 0) {
-	// System.out.println("MUERTEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
-	// parar = true;
-	// try {
-	// DataOutputStream os = new DataOutputStream(socket.getOutputStream());
-	// os.writeUTF("muerte");
-	// } catch (IOException e) {
-	//
-	// }
-	// }
-	// }
-	// }
-	// }
+	private class Paso extends Thread {
+		Socket socket; // Variable para crear un socket
+		Boolean parar; // Variable para detener el while
+		Logica logica; // Variable para llamar atributos
 
-	// here
-	private class Muerte extends Thread {
-		Socket socket;
-		Boolean parar;
-		Logica logica;
-
-		public Muerte(Socket socket, Logica logica) {
+		/**
+		 * Constructor de la clase Paso para pasar la pantalla en Android
+		 * 
+		 * @param socket
+		 * @param logica
+		 */
+		public Paso(Socket socket, Logica logica) {
 			this.socket = socket;
 			parar = false;
 			this.logica = logica;
 		}
 
+		/**
+		 * Metodo para correr el hilo
+		 */
 		@Override
 		public void run() {
 			while (!parar) {

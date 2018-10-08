@@ -150,7 +150,6 @@ public class Jugador {
 			if (balas.get(i).getX() <= -1200 || balas.get(i).getX() >= 2000 || balas.get(i).getY() <= -700
 					|| balas.get(i).getY() >= 1400) {
 				balas.remove(i);
-				// Se borra la bala
 			}
 		}
 
@@ -348,6 +347,9 @@ public class Jugador {
 		this.puntaje = puntaje;
 	}
 	
+	/**
+	 * Metodo para moverme con el teclado
+	 */
 	public void mover() {
 		if (player == 2) {
 			if (app.key == 'W' || app.key == 'w') {
@@ -388,6 +390,9 @@ public class Jugador {
 		}
 	}
 	
+	/**
+	 * Metodo para dejar de moverme con el teclado
+	 */
 	public void soltar() {
 		arriba = false;
 		abajo = false;
