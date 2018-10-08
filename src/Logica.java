@@ -1,3 +1,4 @@
+
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
@@ -78,7 +79,7 @@ public class Logica extends Thread {
 
 		case 2:
 			// Ip
-			pintarPantalla4();
+			pintarPantalla2();
 			break;
 
 		case 3:
