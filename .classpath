@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry excluding="Amayha/|Amayha/|Mifu/|Amayha/|Mifu/|Whisper/|Dokuro/|Escenario/|Recuerdos/" kind="src" path="recursos"/>
+	<classpathentry kind="src" path="recursos/Amayha"/>
+	<classpathentry kind="src" path="recursos/Mifu"/>
+	<classpathentry kind="src" path="recursos/Whisper"/>
+	<classpathentry kind="src" path="recursos/Dokuro"/>
+	<classpathentry kind="src" path="recursos/Escenario"/>
+	<classpathentry kind="src" path="recursos/Recuerdos"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="core.jar"/>
+	<classpathentry kind="lib" path="jl1.0.1.jar"/>
+	<classpathentry kind="lib" path="jsminim.jar"/>
+	<classpathentry kind="lib" path="minim.jar"/>
+	<classpathentry kind="lib" path="mp3spi1.9.5.jar"/>
+	<classpathentry kind="lib" path="tritonus_aos.jar"/>
+	<classpathentry kind="lib" path="tritonus_share.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
